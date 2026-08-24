@@ -74,4 +74,3 @@ Pictools/
 ## 作者与许可
 
 - 作者:HakureiRoy([GitHub](https://github.com/Royapagee))
-- 许可证:遵循所在仓库的 MIT License(见仓库根目录 `LICENSE`)。
