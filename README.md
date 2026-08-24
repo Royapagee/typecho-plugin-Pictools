@@ -1,5 +1,8 @@
 # Pictools —— Typecho 图片上传前简易编辑器
 
+<img width="1143" height="736" alt="Pictools" src="https://github.com/user-attachments/assets/33775437-a4ea-4ff8-b4ea-691adb3f38ba" />
+
+
 在后台撰写文章页面为图片附件提供 **裁剪、缩放、格式转换** 功能,选完图片即可编辑,确认后按原上传流程写入,无需任何后端配置。
 
 ## 功能特性
