@@ -43,7 +43,7 @@
     font-weight: 600;
 }
 
-/* 顶部工具条：缩放比例 + 输出格式 并排，节省垂直空间 */
+/* 顶部工具条：文件名/缩放/输出格式/重置裁剪 并排，节省垂直空间 */
 .pictools-toolbar {
     display: flex;
     align-items: center;
@@ -71,6 +71,21 @@
     white-space: nowrap;
 }
 
+.pictools-toolbar input[type="text"],
+.pictools-toolbar input[type="number"],
+.pictools-toolbar select {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 28px;
+}
+
+.pictools-toolbar #pictools-name {
+    width: 130px;
+}
+
 .pictools-toolbar #pictools-scale {
     width: 96px;
 }
@@ -80,9 +95,21 @@
     min-width: 120px;
 }
 
-/* 单行布局下不再展示提示行（含义已包含在标签中） */
-.pictools-toolbar .pictools-hint {
-    display: none;
+/* 重置裁剪按钮 */
+.pictools-toolbar .btn-xs {
+    padding: 4px 10px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    height: 28px;
+    box-sizing: border-box;
+}
+
+.pictools-toolbar .btn-xs:hover {
+    background: #f0f0f0;
 }
 
 .pictools-body {
@@ -207,25 +234,6 @@
 
 .pictools-footer .btn-primary:hover {
     background: #3a6a82;
-}
-
-.pictools-crop-actions {
-    display: flex;
-    gap: 6px;
-    margin-top: 8px;
-}
-
-.pictools-crop-actions .btn-xs {
-    padding: 3px 8px;
-    font-size: 12px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    cursor: pointer;
-}
-
-.pictools-crop-actions .btn-xs:hover {
-    background: #f0f0f0;
 }
 
 @media (max-width: 768px) {

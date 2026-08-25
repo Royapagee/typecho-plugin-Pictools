@@ -62,9 +62,12 @@ window.Pictools = (function () {
                 '</div>' +
                 '<div class="pictools-toolbar">' +
                     '<div class="pictools-group pictools-toolbar-item">' +
+                        '<label for="pictools-name">文件名</label>' +
+                        '<input type="text" id="pictools-name" placeholder="文件名" />' +
+                    '</div>' +
+                    '<div class="pictools-group pictools-toolbar-item">' +
                         '<label for="pictools-scale">缩放比例 (%)</label>' +
                         '<input type="number" id="pictools-scale" value="100" min="1" max="200" step="1" />' +
-                        '<p class="pictools-hint">100% 为原图尺寸</p>' +
                     '</div>' +
                     '<div class="pictools-group pictools-toolbar-item">' +
                         '<label for="pictools-format">输出格式</label>' +
@@ -75,18 +78,16 @@ window.Pictools = (function () {
                             '<option value="image/webp">WebP</option>' +
                         '</select>' +
                     '</div>' +
+                    '<div class="pictools-group pictools-toolbar-item">' +
+                        '<label>裁剪</label>' +
+                        '<button type="button" class="btn-xs" id="pictools-reset-crop">重置裁剪</button>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="pictools-body">' +
                     '<div class="pictools-canvas-wrap">' +
                         '<canvas id="pictools-preview"></canvas>' +
                     '</div>' +
                     '<div class="pictools-sidebar">' +
-                        '<div class="pictools-group">' +
-                            '<label>裁剪</label>' +
-                            '<div class="pictools-crop-actions">' +
-                                '<button type="button" class="btn-xs" id="pictools-reset-crop">重置裁剪</button>' +
-                            '</div>' +
-                        '</div>' +
                         '<div class="pictools-group pictools-preview-group">' +
                             '<label>输出预览</label>' +
                             '<div class="pictools-preview" id="pictools-output-preview"></div>' +
@@ -105,6 +106,7 @@ window.Pictools = (function () {
         elements.previewCanvas = document.getElementById('pictools-preview');
         previewCanvas = elements.previewCanvas;
         previewCtx = previewCanvas.getContext('2d');
+        elements.nameInput = document.getElementById('pictools-name');
         elements.scaleInput = document.getElementById('pictools-scale');
         elements.formatSelect = document.getElementById('pictools-format');
         elements.resetCropBtn = document.getElementById('pictools-reset-crop');
@@ -267,6 +269,7 @@ window.Pictools = (function () {
             resetCrop();
             elements.scaleInput.value = 100;
             elements.formatSelect.value = 'original';
+            elements.nameInput.value = (originalFile.name || '').replace(/\.[^.]+$/, '');
             renderPreview();
             renderOutputPreview();
             modal.classList.remove('hidden');
@@ -505,7 +508,7 @@ window.Pictools = (function () {
                 return;
             }
 
-            var name = originalFile.name;
+            var name = (elements.nameInput.value || '').trim() || originalFile.name;
             var dot = name.lastIndexOf('.');
             if (dot > 0) {
                 name = name.substring(0, dot) + '.' + format.ext;

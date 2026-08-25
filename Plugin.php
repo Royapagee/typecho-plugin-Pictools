@@ -16,9 +16,9 @@ if (!defined('__TYPECHO_ROOT_DIR__')) {
  * 在后台撰写文章页面为图片附件提供裁剪、缩放、格式转换功能。
  *
  * @package Pictools
- * @author HakureiRoy
- * @version 1.3.0
- * @link https://github.com/Royapagee
+ * @author 罗伊
+ * @version 1.4.0
+ * @link https://blog.roysgensokyo.space/technology/463.html
  */
 class Plugin implements PluginInterface
 {
@@ -68,8 +68,8 @@ class Plugin implements PluginInterface
         $cssUrl = \Typecho\Common::url('usr/plugins/Pictools/static/pictools.css', $baseUrl);
         $jsUrl = \Typecho\Common::url('usr/plugins/Pictools/static/pictools.js', $baseUrl);
 
-        echo '<link rel="stylesheet" href="' . htmlspecialchars($cssUrl) . '?v=1.3.0" />' . "\n";
-        echo '<script src="' . htmlspecialchars($jsUrl) . '?v=1.3.0"></script>' . "\n";
+        echo '<link rel="stylesheet" href="' . htmlspecialchars($cssUrl) . '?v=1.4.0" />' . "\n";
+        echo '<script src="' . htmlspecialchars($jsUrl) . '?v=1.4.0"></script>' . "\n";
         echo '<div id="pictools-modal" class="pictools-modal hidden"></div>' . "\n";
         echo '<script>' . "\n";
         echo '(function () {' . "\n";
