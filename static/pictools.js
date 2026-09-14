@@ -32,10 +32,10 @@ window.Pictools = (function () {
     var elements = {};
 
     /**
-     * 判断文件是否为图片
+     * 判断文件是否为图片（GIF 放行，编辑会丢失动图效果）
      */
     function isImage(file) {
-        return !!(file && file.type && file.type.indexOf('image/') === 0);
+        return !!(file && file.type && file.type.indexOf('image/') === 0 && file.type !== 'image/gif');
     }
 
     /**
@@ -408,11 +408,7 @@ window.Pictools = (function () {
      * 更新尺寸信息
      */
     function updateInfo(size) {
-        var format = elements.formatSelect.value;
-        if (format === 'original') {
-            format = getOriginalMime() || 'image/png';
-        }
-        var formatName = format.replace('image/', '').toUpperCase();
+        var formatName = getOutputFormat().mime.replace('image/', '').toUpperCase();
         elements.info.innerHTML = '原图：' + image.width + ' × ' + image.height +
             '<br>输出：' + size.width + ' × ' + size.height +
             '<br>格式：' + formatName;
@@ -430,47 +426,27 @@ window.Pictools = (function () {
 
     /**
      * 获取输出格式和扩展名
+     *
+     * Canvas 只能编码 JPEG / PNG / WebP，其余类型（GIF、BMP、SVG 等）回退为 PNG，
+     * 否则 toBlob() 会静默产出 PNG 数据却带上错误的 MIME 与扩展名。
      */
     function getOutputFormat() {
-        var format = elements.formatSelect.value;
-        var originalMime = getOriginalMime();
-
-        if (format === 'original') {
-            format = originalMime || 'image/png';
-        }
-
-        var ext = 'png';
-        switch (format) {
-            case 'image/jpeg':
-                ext = 'jpg';
-                break;
-            case 'image/png':
-                ext = 'png';
-                break;
-            case 'image/webp':
-                ext = 'webp';
-                break;
-            default:
-                ext = originalMime ? mimeToExt(originalMime) : 'png';
-                break;
-        }
-
-        return { mime: format, ext: ext };
-    }
-
-    /**
-     * MIME 类型转扩展名
-     */
-    function mimeToExt(mime) {
         var map = {
             'image/jpeg': 'jpg',
             'image/png': 'png',
-            'image/gif': 'gif',
-            'image/webp': 'webp',
-            'image/bmp': 'bmp',
-            'image/svg+xml': 'svg'
+            'image/webp': 'webp'
         };
-        return map[mime] || 'png';
+
+        var format = elements.formatSelect.value;
+        if (format === 'original') {
+            format = getOriginalMime() || 'image/png';
+        }
+
+        if (!map[format]) {
+            format = 'image/png';
+        }
+
+        return { mime: format, ext: map[format] };
     }
 
     /**

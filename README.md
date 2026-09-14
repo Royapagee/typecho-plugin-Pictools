@@ -48,8 +48,10 @@
 \Typecho\Plugin::factory('admin/write-post.php')->bottom = __CLASS__ . '::render';
 ```
 
-`render()` 注入 `pictools.css`、`pictools.js` 与初始化脚本,并在页面就绪后**拦截 `Typecho.uploadFile`**:当检测到 `file.type` 以 `image/` 开头时,改由 `Pictools.edit()` 打开编辑器;其余文件(含 GIF 动图等仍按图片处理的场景)直接交给原上传回调。确认编辑后,插件用 `Canvas.toBlob()` 生成新文件并回调原上传函数,上传逻辑完全复用系统默认实现。
+`render()` 注入 `pictools.css`、`pictools.js` 与初始化脚本,并在页面就绪后**拦截 `Typecho.uploadFile`**:当检测到 `file.type` 以 `image/` 开头且不是 GIF 时,改由 `Pictools.edit()` 打开编辑器;其余文件(GIF 动图、非图片等)直接交给原上传回调。确认编辑后,插件用 `Canvas.toBlob()` 生成新文件并回调原上传函数,上传逻辑完全复用系统默认实现。
 
+> GIF 不经编辑器处理:Canvas 无法保留多帧动画,经 `toBlob()` 输出后只会剩下静帧。
+>
 > 若页面中不存在 jQuery 或 `Typecho.uploadFile`,脚本会安全返回,不影响站点其他功能。
 
 ## 目录结构
